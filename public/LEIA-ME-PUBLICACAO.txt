@@ -1,0 +1,21 @@
+VIALINK — PACOTE ESTÁTICO PARA HOSTINGER
+
+1. Coloque TODOS os arquivos deste pacote na raiz do repositório Git usado
+   pelo site: index.html, config.js, assets/, icons/, sw.js e manifest.webmanifest.
+   A Hostinger deve publicar o repositório na raiz do domínio (public_html).
+   Não coloque a pasta dist ou outra pasta acima de index.html.
+
+2. Abra config.js e preencha supabaseUrl e supabaseAnonKey com a URL e a chave
+   pública (anon ou publishable) do SEU projeto Supabase. Faça commit da edição.
+   Nunca use a chave service_role nesse arquivo.
+
+3. No Supabase, aplique a migração SQL, publique a Edge Function fleet, inclua
+   o domínio em ALLOWED_ORIGINS e configure as URLs de autenticação. As etapas
+   completas estão no README.md do pacote de código-fonte.
+
+4. Após atualizar o Git, force atualização da página e, se já instalou o PWA,
+   feche e reabra o aplicativo para buscar a versão nova.
+
+Se aparecer uma tela de configuração, os arquivos compilados abriram, mas
+config.js ainda não foi preenchido. Se ficar só uma tela em branco, confira o
+console do navegador e o caminho dos arquivos em assets/.

@@ -1,6 +1,7 @@
 import {createClient,FunctionsHttpError} from '@supabase/supabase-js';
-const url=import.meta.env.VITE_SUPABASE_URL;
-const anon=import.meta.env.VITE_SUPABASE_ANON_KEY;
+const runtime=(window as Window & {__VIALINK_CONFIG__?:{supabaseUrl?:string;supabaseAnonKey?:string}}).__VIALINK_CONFIG__;
+const url=runtime?.supabaseUrl||import.meta.env.VITE_SUPABASE_URL;
+const anon=runtime?.supabaseAnonKey||import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const configured=Boolean(url&&anon);
 export const supabase=createClient(url||'https://example.supabase.co',anon||'missing',{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});
 async function unpack(error:any):Promise<never>{

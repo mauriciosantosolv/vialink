@@ -18,7 +18,7 @@ export default function FleetApp(){
  useEffect(()=>{if(!session)return;refresh();const n=setInterval(()=>{if(navigator.onLine)refresh()},30000);return()=>clearInterval(n)},[session?.user.id,refresh]);
  useEffect(()=>{const h=()=>{const value=decodeURIComponent(location.hash.slice(1));if(menu.some(([name])=>name===value)||['Motorista','Detalhes do Veículo','Scanner QR Code','Checklist Diário','Entrega do Veículo','Recebimento do Veículo','Detalhes do Condutor'].includes(value))setPage(value)};h();window.addEventListener('hashchange',h);return()=>window.removeEventListener('hashchange',h)},[]);
  async function act(data:any){if(!online)throw new Error('Conecte-se para registrar esta ação.');try{const d=await fleetRequest('POST',{...data,version});setState(d.state);setVersion(d.version);toast.success('Registro salvo.');return d.state}catch(e:any){if(e.status===409)await refresh();throw e}}
- if(!configured)return <div className="auth-screen"><div className="auth-card"><h1>Vialink</h1><p>Configure VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY para iniciar.</p></div></div>;
+ if(!configured)return <div className="auth-screen"><div className="auth-card"><h1>Vialink</h1><p>Configure a URL e a chave pública do Supabase no arquivo <code>config.js</code> para iniciar.</p></div></div>;
  if(authLoading)return <div className="auth-screen">Carregando Vialink…</div>;
  if(!session)return <Login/>;
  if(passwordSetup)return <SetPassword onDone={()=>{setPasswordSetup(false);history.replaceState(null,'',location.pathname)}}/>;

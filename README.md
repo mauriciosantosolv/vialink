@@ -2,6 +2,21 @@
 
 PWA mobile com autenticação Supabase, fotos privadas, fluxo de posse e registros de frota. O site é estático (Vite/React) para Hostinger. Gravações passam pela Edge Function `fleet`, que identifica o usuário, verifica seu papel e registra a alteração com controle de versão no Postgres.
 
+## Atenção: publicação pelo Git da Hostinger
+
+**O `index.html` da raiz deste projeto é código-fonte, não a página pronta.** Ele carrega `/src/main.tsx`, que depende do Vite. Se o Git da hospedagem apenas copiar este repositório para `public_html`, o navegador não conseguirá executar o TypeScript. Para hospedagem estática, use o pacote separado `vialink-publicacao-hostinger.zip`: coloque **seu conteúdo diretamente na raiz do repositório conectado ao Git da Hostinger**. Ele já contém `index.html` compilado e a pasta `assets/`. Configure `config.js` conforme abaixo. Alternativamente, configure o serviço Web App da Hostinger para executar `npm run build` e servir `dist/`.
+
+No pacote compilado, edite apenas os dois valores públicos de `config.js`:
+
+```js
+window.__VIALINK_CONFIG__ = {
+  supabaseUrl: "https://SEU-PROJETO.supabase.co",
+  supabaseAnonKey: "SUA_CHAVE_ANON_OU_PUBLISHABLE"
+};
+```
+
+Se a tela disser “Configure a URL e a chave pública”, o build está no lugar certo, mas falta preencher `config.js`. Se disser “Carregando o aplicativo” indefinidamente, confira se `index.html` e `assets/` estão juntos na raiz do domínio. Limpe o cache do PWA ou atualize a página depois de trocar os arquivos.
+
 ## Preparar Supabase
 
 1. Crie um projeto Supabase e habilite e-mail/senha em **Authentication**. Defina a URL pública da aplicação em **URL Configuration → Site URL** e adicione a mesma origem em **Redirect URLs**. Configure o SMTP para entregar convites e recuperação de senha antes de convidar a equipe.
@@ -32,7 +47,7 @@ npm test
 npm run build
 ```
 
-O resultado publicável está em `dist/`. Em Hostinger Web App conectado ao GitHub, selecione a branch `main`, configure as duas variáveis `VITE_*`, use `npm install && npm run build` e a pasta de saída `dist`. Em hospedagem compartilhada, envie **o conteúdo** de `dist/` para `public_html`; a conexão Git simples pode baixar o código-fonte sem compilar, portanto use o artefato `vialink-static` do workflow do GitHub Actions ou um build local. Use HTTPS no domínio final: câmera e instalação PWA dependem de contexto seguro. Configure a mesma URL em `ALLOWED_ORIGINS` e no Auth do Supabase.
+O resultado publicável está em `dist/`. Em Hostinger Web App conectado ao GitHub, selecione a branch `main`, configure as duas variáveis `VITE_*` ou preencha `public/config.js`, use `npm install && npm run build` e a pasta de saída `dist`. Em hospedagem compartilhada, envie **o conteúdo** de `dist/` para `public_html`; a conexão Git simples pode baixar o código-fonte sem compilar, portanto use o pacote `vialink-publicacao-hostinger.zip` ou o artefato `vialink-static` do workflow. Use HTTPS no domínio final: câmera e instalação PWA dependem de contexto seguro. Configure a mesma URL em `ALLOWED_ORIGINS` e no Auth do Supabase.
 
 Não inclua `SUPABASE_SERVICE_ROLE_KEY` no GitHub, em variáveis `VITE_*` ou no navegador. As duas variáveis `VITE_*` são públicas e devem conter apenas URL e chave anon/publishable. O workflow gera um artefato estático; não publica automaticamente nem migra o banco. Rode a migração e faça o deploy da função antes da primeira publicação.
 
