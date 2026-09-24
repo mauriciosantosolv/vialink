@@ -17,5 +17,8 @@ VIALINK — PACOTE ESTÁTICO PARA HOSTINGER
    feche e reabra o aplicativo para buscar a versão nova.
 
 Se aparecer uma tela de configuração, os arquivos compilados abriram, mas
-config.js ainda não foi preenchido. Se ficar só uma tela em branco, confira o
-console do navegador e o caminho dos arquivos em assets/.
+config.js ainda não foi preenchido. Se aparecer a mensagem "Os arquivos do
+aplicativo não carregaram", verifique se assets/ está na mesma pasta que
+index.html e se a Hostinger publicou a versão nova. Pelo código-fonte da
+página no navegador: uma referência a src/main.tsx indica que publicou o
+projeto original; uma referência a assets/index-...js indica a versão pronta.
