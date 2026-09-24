@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "types": [
+      "node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "app/operations.tsx",
+    "components/**/*.tsx",
+    "hooks/**/*.ts",
+    "supabase/functions/_shared/**/*.ts",
+    "lib/utils.ts",
+    "lib/fleet-data.ts",
+    "lib/qrcode.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "examples"
+  ]
+}

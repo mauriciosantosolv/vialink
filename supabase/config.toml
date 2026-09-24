@@ -1,0 +1,2 @@
+[functions.fleet]
+verify_jwt = true
